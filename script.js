@@ -294,5 +294,4 @@ function loadCart() {
 function clearCart() {
     localStorage.removeItem("cart");
     cart = [];
-
 }
