@@ -10,6 +10,7 @@ menuItem.forEach(mItem => {
 
     //apply border to the selected  menu item
     hovering(mItem);
+
     const addButton = mItem.querySelector('.add-to-cart .add-item');
     const countControl = mItem.querySelector('.add-to-cart .add-count');
     const incrementButton = mItem.querySelector('.add');
@@ -22,7 +23,7 @@ menuItem.forEach(mItem => {
     const totalCount = cartContainer.querySelector('.totalReciept');
 
     //لما أعدي ع زرار الأد يخليني أكنترول
-    addToggle(addButton, countControl);
+    addToggle(addButton, countControl, incrementButton, decrementButton);
 
 
     //determine the matched item
@@ -66,6 +67,7 @@ menuItem.forEach(mItem => {
             cartItem.itemCount++;
 
             numberElement.innerHTML = cartItem.itemCount;
+
             saveCart();
         };
 
@@ -73,6 +75,7 @@ menuItem.forEach(mItem => {
             if (cartItem.itemCount > 0) {
                 cartItem.itemCount--;
                 numberElement.innerHTML = cartItem.itemCount;
+
                 saveCart();
 
             }
@@ -113,6 +116,15 @@ menuItem.forEach(mItem => {
                 saveCart();
 
             });
+            if (cartItem.itemCount === 0) {
+                cart.splice(index, 1); // شيل العنصر من الكارت
+                itemDiv.remove(); // شيل العنصر من الـ DOM
+                updateCartNumber(cart);
+                resetMenuCounts(cart)
+                updateTotal(cart, totalCount);
+                saveCart();
+
+            }
 
             updateCartNumber(cart);
             rightInterface();
@@ -218,15 +230,17 @@ function updateCartNumber(cart) {
     itemsNumber.innerHTML = itemsTotalNumber;
 }
 //لما أضغط ع زرار الأد شكلها هيختفي ويبنلي الكنترول
-function addToggle(addButton, countControl) {
+function addToggle(addButton, countControl, incrementButton, decrementButton) {
     addButton.addEventListener('mouseover', () => {
         addButton.style.display = 'none';
         countControl.style.display = 'flex';
+        indnhovering(incrementButton, decrementButton);
 
     });
 }
 
 //menu item hovering
+
 function hovering(mItem) {
     mItem.addEventListener('mouseover', () => {
 
@@ -238,6 +252,24 @@ function hovering(mItem) {
     });
 }
 
+function indnhovering(incrementButton, decrementButton) {
+    incrementButton.addEventListener('mouseover', () => {
+        incrementButton.style.backgroundColor = '#FAF5F0';
+        incrementButton.style.color = '#C44F1C';
+    });
+    decrementButton.addEventListener('mouseover', () => {
+        decrementButton.style.backgroundColor = '#FAF5F0';
+        decrementButton.style.color = '#C44F1C';
+    });
+    incrementButton.addEventListener('mouseout', () => {
+        incrementButton.style.backgroundColor = '#C44F1C';
+        incrementButton.style.color = '#FAF5F0';
+    });
+    decrementButton.addEventListener('mouseout', () => {
+        decrementButton.style.backgroundColor = '#C44F1C';
+        decrementButton.style.color = '#FAF5F0';
+    });
+}
 //total counting
 function updateTotal(cart, totalCount) {
     let sum = 0;
