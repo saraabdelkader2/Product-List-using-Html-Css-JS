@@ -244,7 +244,7 @@ function updateTotal(cart, totalCount) {
     cart.forEach(item => {
         sum += parseFloat(item.itemCount) * parseFloat(item.itemPrice);
     });
-    totalCount.innerHTML = sum;
+    totalCount.innerHTML = `$${ sum.toFixed(2) }`;
 }
 
 function resetMenuCounts(cart) {
@@ -294,4 +294,5 @@ function loadCart() {
 function clearCart() {
     localStorage.removeItem("cart");
     cart = [];
+
 }
